@@ -1,4 +1,4 @@
-import urllib2
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import csv
 from datetime import datetime
@@ -10,7 +10,7 @@ config = {
   'user': 'root',
   'password': 'root',
   'host': 'localhost',
-  'port': '8889',
+  'port': '3306',
   'database': 'nba',
   'raise_on_warnings': True,
 }
@@ -36,7 +36,7 @@ for letter in letters:
     try:
         quote_page = 'https://www.basketball-reference.com/players/'+letter+'/'
         print('procesando letra '+letter)
-        page = urllib2.urlopen(quote_page)
+        page = urlopen(quote_page).read()
         soup = BeautifulSoup(page, 'html.parser')
         players = soup.find('table', attrs={'id': 'players'})
         tbody = players.find('tbody')
